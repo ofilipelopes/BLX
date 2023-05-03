@@ -1,8 +1,8 @@
 from fastapi import FastAPI, Depends
 from sqlalchemy.orm import Session
-from schemas import schemas
-from infra.sqlalchemy.config.database import get_db, criar_bd
-from infra.sqlalchemy.repositorios.produto import RepositorioProduto
+from src.schemas import schemas
+from src.infra.sqlalchemy.config.database import get_db, criar_bd
+from src.infra.sqlalchemy.repositorios.produto import RepositorioProduto
 
 
 criar_bd()
@@ -18,5 +18,6 @@ def criar_produto(produto: schemas.Produto, db: Session = Depends(get_db)):
 
 
 @app.get('/produtos')
-def listar_produtos():
-    return {'msg': 'Listagem de produtos'}
+def listar_produtos(db: Session = Depends(get_db)):
+    produtos = RepositorioProduto(db).listar()
+    return produtos

@@ -1,6 +1,6 @@
 from sqlalchemy.orm import Session
-from schemas import schemas
-from infra.sqlalchemy.models import models
+from src.schemas import schemas
+from src.infra.sqlalchemy.models import models
 
 
 class RepositorioProduto():
@@ -17,7 +17,7 @@ class RepositorioProduto():
 
         self.db.add(db_produto)
         self.db.commit()
-        self.db.refresh()
+        self.db.refresh(db_produto)
 
         return db_produto
 
